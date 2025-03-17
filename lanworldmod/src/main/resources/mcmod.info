@@ -1,0 +1,10 @@
+{
+  "modid": "lanworldmod",
+  "name": "LAN World Mod",
+  "description": "Generates a randomized invite code for LAN worlds and lets players join with the code.",
+  "version": "1.0",
+  "credits": "Made by DerKaiser2023",
+  "authorList": ["DerKaiser2023"],
+  "url": "",
+  "dependencies": []
+}

@@ -1,0 +1,28 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '2.3.1'
+}
+
+group = 'com.lanworldmod'
+version = '1.0'
+
+repositories {
+    maven {
+        url = 'https://files.minecraftforge.net/maven/'
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.7.10-10.13.4.1614-1.7.10'
+    compile 'org.apache.commons:commons-io:2.4'
+}
+
+minecraft {
+    mappings 'official'
+    runDir 'run'
+}
+
+processResources {
+    filesMatching('mcmod.info') {
+        expand 'version': version, 'mcpVersion': project.hasProperty('mcpVersion') ? mcpVersion : ''
+    }
+}
