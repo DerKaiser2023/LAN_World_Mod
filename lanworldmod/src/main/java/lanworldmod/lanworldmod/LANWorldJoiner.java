@@ -11,18 +11,17 @@ public class LANWorldJoiner {
 
     public LANWorldJoiner(String inviteCode) {
         this.inviteCode = inviteCode;
+        this.publicIp = "12.3.45.67"; // Replace with actual public IP detection logic
+        this.port = 25565; // Replace with actual port if different
     }
 
-    // For example purposes, assume the public IP is static or stored somewhere
-    publicIp = "12.3.45.67.89"; // Replace with actual public IP detection logic
-    port = 25565; // Replace with actual port if different
-
-    // Try to connect
-    try {
-        Socket socket = new Socket(publicIp, port);
-        System.out.printIn("Connected to LAN world at " + publicIp + ":" + port);
-        // Connection logic can go here (e.g., chat commands for LAN join)
-    } catch (IOException e) {
-        System.out.printIn("Conncection failed: " + e.getMessage());
+    public void connectToLANWorld() {
+        try {
+            Socket socket = new Socket(publicIp, port);
+            System.out.println("Connected to LAN world at " + publicIp + ":" + port);
+            // Connection logic can go here (e.g., chat commands for LAN join)
+        } catch (IOException e) {
+            System.out.println("Connection failed: " + e.getMessage());
+        }
     }
 }
