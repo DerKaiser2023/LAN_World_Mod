@@ -2,6 +2,8 @@ package com.lanworldmod.lanworldmod;
 
 import java.net.Socket;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Scanner;
 
 public class LANWorldJoiner {
 
@@ -11,15 +13,30 @@ public class LANWorldJoiner {
 
     public LANWorldJoiner(String inviteCode) {
         this.inviteCode = inviteCode;
-        this.publicIp = "12.3.45.67"; // Replace with actual public IP detection logic
+        this.publicIp = getPublicIP(); // Automatically fetch the public IP
         this.port = 25565; // Replace with actual port if different
     }
 
+    private String getPublicIP() {
+        try {
+            URL url = new URL("https://checkip.amazonaws.com");
+            Scanner scanner = new Scanner(url.openStream());
+            return scanner.next().trim();
+        } catch (IOException e) {
+            System.out.println("Failed to fetch public IP: " + e.getMessage());
+            return "UNKNOWN";
+        }
+    }
+
     public void connectToLANWorld() {
+        if (publicIp.equals("UNKNOWN")) {
+            System.out.println("Cannot connect: Public IP not found.");
+            return;
+        }
+
         try {
             Socket socket = new Socket(publicIp, port);
             System.out.println("Connected to LAN world at " + publicIp + ":" + port);
-            // Connection logic can go here (e.g., chat commands for LAN join)
         } catch (IOException e) {
             System.out.println("Connection failed: " + e.getMessage());
         }
