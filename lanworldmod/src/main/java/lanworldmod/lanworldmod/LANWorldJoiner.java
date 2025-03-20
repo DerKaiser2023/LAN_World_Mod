@@ -1,8 +1,11 @@
 package com.lanworldmod.lanworldmod;
 
-import java.net.Socket;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.Socket;
+import java.net.URI;
 import java.util.Scanner;
 
 public class LANWorldJoiner {
@@ -19,9 +22,15 @@ public class LANWorldJoiner {
 
     private String getPublicIP() {
         try {
-            URL url = new URL("https://checkip.amazonaws.com");
-            Scanner scanner = new Scanner(url.openStream());
-            return scanner.next().trim();
+            URI uri = URI.create("https://checkip.amazonaws.com");
+            HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                return reader.readLine().trim();
+            }
         } catch (IOException e) {
             System.out.println("Failed to fetch public IP: " + e.getMessage());
             return "UNKNOWN";
