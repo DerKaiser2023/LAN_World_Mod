@@ -1,4 +1,4 @@
-package com.example.lanworldmod.network;
+package com.lanworldmod.lanworldmod.network;
 
 import java.io.IOException;
 import java.net.Socket;
