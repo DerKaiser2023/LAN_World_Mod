@@ -1,6 +1,7 @@
 package com.lanworldmod.lanworldmod;
 
-import java.net.Socket;
+import com.lanworldmod.lanworldmod.network.NetworkHandler;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
@@ -13,8 +14,8 @@ public class LANWorldJoiner {
 
     public LANWorldJoiner(String inviteCode) {
         this.inviteCode = inviteCode;
-        this.publicIp = getPublicIP(); // Automatically fetch the public IP
-        this.port = 25565; // Replace with actual port if different
+        this.publicIp = getPublicIP(); // Replace with your mapping logic if needed
+        this.port = 25565; // Default Minecraft port, or decode from code later
     }
 
     private String getPublicIP() {
@@ -29,16 +30,11 @@ public class LANWorldJoiner {
     }
 
     public void connectToLANWorld() {
-        if (publicIp.equals("UNKNOWN")) {
+        if ("UNKNOWN".equals(publicIp)) {
             System.out.println("Cannot connect: Public IP not found.");
             return;
         }
 
-        try {
-            Socket socket = new Socket(publicIp, port);
-            System.out.println("Connected to LAN world at " + publicIp + ":" + port);
-        } catch (IOException e) {
-            System.out.println("Connection failed: " + e.getMessage());
-        }
+        NetworkHandler.establishConnection(publicIp, port);
     }
 }
